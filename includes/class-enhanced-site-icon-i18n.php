@@ -6,7 +6,7 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://example.com
+ * @link       https://milbar.eu
  * @since      0.0.1
  *
  * @package    Enhanced_Site_Icon
@@ -22,7 +22,7 @@
  * @since      0.0.1
  * @package    Enhanced_Site_Icon
  * @subpackage Enhanced_Site_Icon/includes
- * @author     Your Name <email@example.com>
+ * @author     Milan Bartalovics <develop@milbar.eu>
  */
 class Enhanced_Site_Icon_i18n {
 

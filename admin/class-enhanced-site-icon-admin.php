@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://example.com
+ * @link       https://milbar.eu
  * @since      0.0.1
  *
  * @package    Enhanced_Site_Icon
@@ -18,7 +18,7 @@
  *
  * @package    Enhanced_Site_Icon
  * @subpackage Enhanced_Site_Icon/admin
- * @author     Your Name <email@example.com>
+ * @author     Milan Bartalovics <develop@milbar.eu>
  */
 class Enhanced_Site_Icon_Admin
 {
@@ -77,7 +77,6 @@ class Enhanced_Site_Icon_Admin
          */
 
         wp_enqueue_style($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'css/enhanced-site-icon.css', array(), $this->version, 'all');
-
     }
 
     /**
@@ -103,5 +102,4 @@ class Enhanced_Site_Icon_Admin
         wp_enqueue_script($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery'), $this->version, false);
 
     }
-
 }

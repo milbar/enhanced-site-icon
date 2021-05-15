@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://example.com
+ * @link       https://milbar.eu
  * @since      0.0.1
  *
  * @package    Enhanced_Site_Icon
@@ -25,176 +25,208 @@
  * @since      0.0.1
  * @package    Enhanced_Site_Icon
  * @subpackage Enhanced_Site_Icon/includes
- * @author     Your Name <email@example.com>
+ * @author     Milan Bartalovics <develop@milbar.eu>
  */
-class Enhanced_Site_Icon {
+class Enhanced_Site_Icon
+{
 
-	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    0.0.1
-	 * @access   protected
-	 * @var      Enhanced_Site_Icon_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
+    /**
+     * The loader that's responsible for maintaining and registering all hooks that power
+     * the plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      Enhanced_Site_Icon_Loader $loader Maintains and registers all hooks for the plugin.
+     */
+    protected $loader;
 
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    0.0.1
-	 * @access   protected
-	 * @var      string    $enhanced_site_icon    The string used to uniquely identify this plugin.
-	 */
-	protected $enhanced_site_icon;
+    /**
+     * The unique identifier of this plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      string $enhanced_site_icon The string used to uniquely identify this plugin.
+     */
+    protected $enhanced_site_icon;
 
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    0.0.1
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
+    /**
+     * The current version of the plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      string $version The current version of the plugin.
+     */
+    protected $version;
 
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    0.0.1
-	 */
-	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
-		} else {
-			$this->version = '0.0.1';
-		}
-		$this->enhanced_site_icon = 'enhanced-site-icon';
+    /**
+     * The main page title of the plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      string $main_page_title The main page title of the plugin.
+     */
+    protected $main_page_title;
 
-		$this->load_dependencies();
-		$this->set_locale();
-		$this->define_admin_hooks();
-	}
+    /**
+     * Define the core functionality of the plugin.
+     *
+     * Set the plugin name and the plugin version that can be used throughout the plugin.
+     * Load the dependencies, define the locale, and set the hooks for the admin area and
+     * the public-facing side of the site.
+     *
+     * @since    0.0.1
+     */
+    public function __construct()
+    {
+        if (defined('PLUGIN_NAME_VERSION')) {
+            $this->version = PLUGIN_NAME_VERSION;
+        } else {
+            $this->version = '0.0.1';
+        }
+        $this->enhanced_site_icon = 'enhanced-site-icon';
+        $this->main_page_title = sprintf('%s - %s', __('Enhanced Site Icon', 'enhanced-site-icon'), __('Settings'));
 
-	/**
-	 * Load the required dependencies for this plugin.
-	 *
-	 * Include the following files that make up the plugin:
-	 *
-	 * - Enhanced_Site_Icon_Loader. Orchestrates the hooks of the plugin.
-	 * - Enhanced_Site_Icon_i18n. Defines internationalization functionality.
-	 * - Enhanced_Site_Icon_Admin. Defines all hooks for the admin area.
-	 * - Enhanced_Site_Icon_Public. Defines all hooks for the public side of the site.
-	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
-	 * @since    0.0.1
-	 * @access   private
-	 */
-	private function load_dependencies() {
+        $this->load_dependencies();
+        $this->set_locale();
+        $this->define_admin_hooks();
+    }
 
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-enhanced-site-icon-loader.php';
+    /**
+     * Load the required dependencies for this plugin.
+     *
+     * Include the following files that make up the plugin:
+     *
+     * - Enhanced_Site_Icon_Loader. Orchestrates the hooks of the plugin.
+     * - Enhanced_Site_Icon_i18n. Defines internationalization functionality.
+     * - Enhanced_Site_Icon_Admin. Defines all hooks for the admin area.
+     * - Enhanced_Site_Icon_Public. Defines all hooks for the public side of the site.
+     *
+     * Create an instance of the loader which will be used to register the hooks
+     * with WordPress.
+     *
+     * @since    0.0.1
+     * @access   private
+     */
+    private function load_dependencies()
+    {
 
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-enhanced-site-icon-i18n.php';
+        /**
+         * The class responsible for orchestrating the actions and filters of the
+         * core plugin.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-enhanced-site-icon-loader.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-enhanced-site-icon-admin.php';
+        /**
+         * The class responsible for defining internationalization functionality
+         * of the plugin.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-enhanced-site-icon-i18n.php';
 
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-enhanced-site-icon-public.php';
+        /**
+         * The class responsible for defining all actions that occur in the admin area.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-enhanced-site-icon-admin.php';
 
-		$this->loader = new Enhanced_Site_Icon_Loader();
+        /**
+         * The class responsible for defining all actions that occur in the admin area.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-enhanced-site-icon-settings.php';
 
-	}
+        $this->loader = new Enhanced_Site_Icon_Loader();
 
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Enhanced_Site_Icon_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    0.0.1
-	 * @access   private
-	 */
-	private function set_locale() {
+    }
 
-		$plugin_i18n = new Enhanced_Site_Icon_i18n();
+    /**
+     * Define the locale for this plugin for internationalization.
+     *
+     * Uses the Enhanced_Site_Icon_i18n class in order to set the domain and to register the hook
+     * with WordPress.
+     *
+     * @since    0.0.1
+     * @access   private
+     */
+    private function set_locale()
+    {
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+        $plugin_i18n = new Enhanced_Site_Icon_i18n();
 
-	}
+        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
 
-	/**
-	 * Register all of the hooks related to the admin area functionality
-	 * of the plugin.
-	 *
-	 * @since    0.0.1
-	 * @access   private
-	 */
-	private function define_admin_hooks() {
+    }
 
-		$plugin_admin = new Enhanced_Site_Icon_Admin( $this->get_enhanced_site_icon(), $this->get_version() );
+    /**
+     * Register all of the hooks related to the admin area functionality
+     * of the plugin.
+     *
+     * @since    0.0.1
+     * @access   private
+     */
+    private function define_admin_hooks()
+    {
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+        $plugin_admin = new Enhanced_Site_Icon_Admin($this->get_enhanced_site_icon(), $this->get_version());
+        $plugin_settings = new Enhanced_Site_Icon_Settings($this->get_enhanced_site_icon(), $this->get_version(), $this->get_main_page_title());
 
-	}
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action('admin_menu', $plugin_settings, 'add_theme_page');
+        $this->loader->add_action('admin_init', $plugin_settings, 'mb_esi_settings_init');
 
-	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
-	 * @since    0.0.1
-	 */
-	public function run() {
-		$this->loader->run();
-	}
+    }
 
-	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     0.0.1
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_enhanced_site_icon() {
-		return $this->enhanced_site_icon;
-	}
+    /**
+     * Run the loader to execute all of the hooks with WordPress.
+     *
+     * @since    0.0.1
+     */
+    public function run()
+    {
+        $this->loader->run();
+    }
 
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     0.0.1
-	 * @return    Enhanced_Site_Icon_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
-	}
+    /**
+     * The name of the plugin used to uniquely identify it within the context of
+     * WordPress and to define internationalization functionality.
+     *
+     * @return    string    The name of the plugin.
+     * @since     0.0.1
+     */
+    public function get_enhanced_site_icon()
+    {
+        return $this->enhanced_site_icon;
+    }
 
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     0.0.1
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
+    /**
+     * The reference to the class that orchestrates the hooks with the plugin.
+     *
+     * @return    Enhanced_Site_Icon_Loader    Orchestrates the hooks of the plugin.
+     * @since     0.0.1
+     */
+    public function get_loader()
+    {
+        return $this->loader;
+    }
+
+    /**
+     * Retrieve the version number of the plugin.
+     *
+     * @return    string    The version number of the plugin.
+     * @since     0.0.1
+     */
+    public function get_version()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Retrieve the main page title of the plugin.
+     *
+     * @return    string    The version number of the plugin.
+     * @since     0.0.1
+     */
+    public function get_main_page_title()
+    {
+        return $this->main_page_title;
+    }
 
 }
