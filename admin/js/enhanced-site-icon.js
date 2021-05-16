@@ -34,10 +34,11 @@
         // Uploading files
         var file_frame;
         var wp_media_post_id = wp.media.model.settings.post.id; // Store the old id
-        var set_to_post_id = window.MilBar.currentImgID; // Set this
+        var set_to_post_id = 0; // Set this
 
         jQuery('.upload_button').on('click', function (event) {
             var clickedBtnID = $(this).attr('id');
+            set_to_post_id = $('#' + clickedBtnID).closest('td').find('input.upload_field:first').val();
             event.preventDefault();
 
             // If the media frame already exists, reopen it.
@@ -73,7 +74,7 @@
                 // Do something with attachment.id and/or attachment.url here
                 $('#' + clickedBtnID).closest('td').find('img.upload_preview:first').attr('src', attachment.url).fadeIn();
                 $('#' + clickedBtnID).closest('td').find('input.upload_field:first').val(attachment.id);
-                console.log(clickedBtnID);
+                $('#' + clickedBtnID).closest('td').find('input.upload_clear:first').removeClass('disabled');
 
                 // Restore the main post ID
                 wp.media.model.settings.post.id = wp_media_post_id;
@@ -90,9 +91,14 @@
 
         jQuery('.upload_clear').on('click', function (event) {
             event.preventDefault();
-            $(this).closest('td').find('img.upload_preview:first').hide();
+            $(this).addClass('disabled');
+            $(this).closest('td').find('img.upload_preview:first').fadeOut();
             $(this).closest('td').find('input.upload_field:first').val(0);
             return false;
+        });
+
+        $(function() {
+            $('.esi-color-picker').wpColorPicker();
         });
     });
 })(jQuery);

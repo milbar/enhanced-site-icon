@@ -75,8 +75,6 @@ class Enhanced_Site_Icon_Settings
             'esi-settings',
             array($this, 'esi_settings_page')
         );
-
-        add_action('admin_print_scripts-' . $page, array($this, 'esi_settings_page_enqueue_assets'));
     }
 
     public function mb_esi_settings_init()
@@ -85,7 +83,13 @@ class Enhanced_Site_Icon_Settings
 
         add_settings_section(
             'mb_esi_main_section',
+            __('Light Color Scheme', 'enhanced-site-icon'),
             '',
+            'mb_esi_plugin'
+        );
+        add_settings_section(
+            'mb_esi_dark_section',
+            __('Dark Color Scheme', 'enhanced-site-icon'),
             '',
             'mb_esi_plugin'
         );
@@ -95,7 +99,35 @@ class Enhanced_Site_Icon_Settings
             __('Site Icon'),
             array($this, 'site_icon_render'),
             'mb_esi_plugin',
-            'mb_esi_main_section'
+            'mb_esi_main_section',
+            array('name' => 'site_icon')
+        );
+
+        add_settings_field(
+            "site_icon_dark",
+            sprintf('%s %s', __('Dark Theme', 'enhanced-site-icon'), __('Site Icon')),
+            array($this, 'site_icon_render'),
+            'mb_esi_plugin',
+            'mb_esi_dark_section',
+            array('name' => 'site_icon_dark')
+        );
+
+        add_settings_field(
+            "site_color",
+            __('Color Scheme', 'enhanced-site-icon'),
+            array($this, 'color_picker_render'),
+            'mb_esi_plugin',
+            'mb_esi_main_section',
+            array('name' => 'site_color')
+        );
+
+        add_settings_field(
+            "site_color_dark",
+            sprintf('%s %s', __('Dark Theme', 'enhanced-site-icon'), __('Color Scheme', 'enhanced-site-icon')),
+            array($this, 'color_picker_render'),
+            'mb_esi_plugin',
+            'mb_esi_dark_section',
+            array('name' => 'site_color_dark')
         );
     }
 
@@ -119,33 +151,41 @@ class Enhanced_Site_Icon_Settings
         <?php
     }
 
-    // enqueue needed assets (for tinymce actualy)
-    function esi_settings_page_enqueue_assets()
-    {
-        $options = get_option('mb_esi_plugin_options');
-        $site_icon = $options['site_icon'];
-
-        ?>
-        <script type='text/javascript'>
-            window.MilBar = window.MilBar || {};
-            window.MilBar.currentImgID = <?php echo $site_icon; ?>;
-
-        </script><?php
-
-    }
-
-    function site_icon_render()
+    function site_icon_render($args)
     {
         wp_enqueue_media();
 
+        $name = $args['name'];
+        $site_icon = 0;
+        $show_delete = false;
         $options = get_option('mb_esi_plugin_options');
-        $site_icon = $options['site_icon'];
+        if (isset($options[$name]) && !empty($options[$name])) {
+            $site_icon = $options[$name];
+            $show_delete = true;
+        }
+
         ?>
         <img class="upload_preview" <?php echo empty($site_icon) ? 'style="display:none;"' : ''; ?>
              src="<?php echo wp_get_attachment_thumb_url($site_icon); ?>"/>
-        <input type="hidden" class="upload_field" name="mb_esi_plugin_options[site_icon]" id="site_icon"
+        <input type="hidden" class="upload_field" name="mb_esi_plugin_options[<?php echo $name ?>]"
+               id="<?php echo $name ?>"
                value="<?php echo $site_icon; ?>"/>
-        <input id="site_icon_button_upload" type="button" class="button upload_button" value="<?php _e('Select'); ?>"/>
-        <input id="site_icon_button_clear" type="button" class="button upload_clear" value="<?php _e('Delete'); ?>"/>
+        <input id="<?php echo $name ?>_button_upload" type="button" class="button upload_button"
+               value="<?php _e('Upload'); ?>"/>
+        <input id="<?php echo $name ?>_button_clear" type="button" class="button button-danger upload_clear <?php echo !$show_delete ? 'disabled' : ''; ?>"
+               value="<?php _e('Delete'); ?>"/>
     <?php }
+
+    function color_picker_render($args) {
+        $name = $args['name'];
+        $value = '';
+        $options = get_option('mb_esi_plugin_options');
+        if (isset($options[$name])) {
+            $value = $options[$name];
+        }
+        ?>
+        <input class="esi-color-picker" type='text' name='mb_esi_plugin_options[<?php echo $name ?>]' value='<?php echo $value; ?>'>
+        <?php
+    }
+
 }

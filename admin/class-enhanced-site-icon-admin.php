@@ -76,6 +76,7 @@ class Enhanced_Site_Icon_Admin
          * class.
          */
 
+        wp_enqueue_style( 'wp-color-picker' );
         wp_enqueue_style($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'css/enhanced-site-icon.css', array(), $this->version, 'all');
     }
 
@@ -99,7 +100,7 @@ class Enhanced_Site_Icon_Admin
          * class.
          */
 
-        wp_enqueue_script($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery'), $this->version, false);
+        wp_enqueue_script($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'wp-color-picker'), $this->version, false);
 
     }
 }

@@ -8,3 +8,48 @@
     width: 150px;
     object-fit: contain;
 }
+
+.wp-core-ui .button-danger {
+    background: #d63638;
+    border-color: #d63638;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+.wp-core-ui .button-danger.hover,
+.wp-core-ui .button-danger:hover,
+.wp-core-ui .button-danger.focus,
+.wp-core-ui .button-danger:focus {
+    background: #c8282a;
+    border-color: #c8282a;
+    color: #fff;
+}
+
+.wp-core-ui .button-danger.focus,
+.wp-core-ui .button-danger:focus {
+    box-shadow: 0 0 0 1px #fff,
+    0 0 0 3px #d63638;
+}
+
+.wp-core-ui .button-danger.active,
+.wp-core-ui .button-danger.active:hover,
+.wp-core-ui .button-danger.active:focus,
+.wp-core-ui .button-danger:active {
+    background: #c8282a;
+    border-color: #c8282a;
+    box-shadow: none;
+    color: #fff;
+}
+
+.wp-core-ui .button-danger[disabled],
+.wp-core-ui .button-danger:disabled,
+.wp-core-ui .button-danger-disabled,
+.wp-core-ui .button-danger.disabled {
+    color: #a7aaad !important;
+    background: #f6f7f7 !important;
+    border-color: #dcdcde !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    cursor: default;
+}
