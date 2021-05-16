@@ -50,6 +50,15 @@ class Enhanced_Site_Icon_Settings
     private $main_page_title;
 
     /**
+     * Options Group slug of the plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      string $esi_plugin_option Options Group slug of the plugin.
+     */
+    private $esi_plugin_option;
+
+    /**
      * Initialize the class and set its properties.
      *
      * @param string $enhanced_site_icon The name of this plugin.
@@ -57,13 +66,26 @@ class Enhanced_Site_Icon_Settings
      * @param string $main_page_title The main page title of the plugin.
      * @since    0.0.1
      */
-    public function __construct($enhanced_site_icon, $version, $main_page_title)
+    public function __construct($enhanced_site_icon, $version, $main_page_title, $esi_plugin_option)
     {
 
         $this->enhanced_site_icon = $enhanced_site_icon;
         $this->version = $version;
         $this->main_page_title = $main_page_title;
+        $this->esi_plugin_option = $esi_plugin_option;
+    }
 
+    /**
+     * Retrieve the the given option from the plugin options group.
+     *
+     * @param string $option_name
+     * @param string|int $default
+     * @return mixed|string|int
+     */
+    public function get_esi_option($option_name = '', $default = '')
+    {
+        $plugin = new Enhanced_Site_Icon();
+        return $plugin->get_esi_option($option_name, $default);
     }
 
     public function add_theme_page()
@@ -79,7 +101,7 @@ class Enhanced_Site_Icon_Settings
 
     public function mb_esi_settings_init()
     {
-        register_setting('mb_esi_plugin', 'mb_esi_plugin_options');
+        register_setting('mb_esi_plugin', $this->esi_plugin_option);
 
         add_settings_section(
             'mb_esi_main_section',
@@ -156,35 +178,36 @@ class Enhanced_Site_Icon_Settings
         wp_enqueue_media();
 
         $name = $args['name'];
-        $site_icon = 0;
         $show_delete = false;
-        $options = get_option('mb_esi_plugin_options');
-        if (isset($options[$name]) && !empty($options[$name])) {
-            $site_icon = $options[$name];
+        $name_arg = sprintf('%s[%s]', $this->esi_plugin_option, $name);
+
+        $site_icon = $this->get_esi_option($name, 0);
+        if ($site_icon) {
             $show_delete = true;
         }
 
         ?>
         <img class="upload_preview" <?php echo empty($site_icon) ? 'style="display:none;"' : ''; ?>
              src="<?php echo wp_get_attachment_thumb_url($site_icon); ?>"/>
-        <input type="hidden" class="upload_field" name="mb_esi_plugin_options[<?php echo $name ?>]"
+        <input type="hidden" class="upload_field" name="<?php echo $name_arg ?>"
                id="<?php echo $name ?>"
                value="<?php echo $site_icon; ?>"/>
         <input id="<?php echo $name ?>_button_upload" type="button" class="button upload_button"
                value="<?php _e('Upload'); ?>"/>
-        <input id="<?php echo $name ?>_button_clear" type="button" class="button button-danger upload_clear <?php echo !$show_delete ? 'disabled' : ''; ?>"
+        <input id="<?php echo $name ?>_button_clear" type="button"
+               class="button button-danger upload_clear <?php echo !$show_delete ? 'disabled' : ''; ?>"
                value="<?php _e('Delete'); ?>"/>
     <?php }
 
-    function color_picker_render($args) {
+    function color_picker_render($args)
+    {
         $name = $args['name'];
-        $value = '';
-        $options = get_option('mb_esi_plugin_options');
-        if (isset($options[$name])) {
-            $value = $options[$name];
-        }
+        $value = $this->get_esi_option($name);
+        $name_arg = sprintf('%s[%s]', $this->esi_plugin_option, $name);
         ?>
-        <input class="esi-color-picker" type='text' name='mb_esi_plugin_options[<?php echo $name ?>]' value='<?php echo $value; ?>'>
+
+        <input class="esi-color-picker" type='text' name='<?php echo $name_arg ?>'
+               value='<?php echo $value; ?>'>
         <?php
     }
 

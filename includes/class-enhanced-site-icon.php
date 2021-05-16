@@ -68,6 +68,15 @@ class Enhanced_Site_Icon
     protected $main_page_title;
 
     /**
+     * Options Group slug of the plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      string $esi_plugin_option Options Group slug of the plugin.
+     */
+    protected $esi_plugin_option;
+
+    /**
      * Define the core functionality of the plugin.
      *
      * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -85,6 +94,7 @@ class Enhanced_Site_Icon
         }
         $this->enhanced_site_icon = 'enhanced-site-icon';
         $this->main_page_title = sprintf('%s - %s', __('Enhanced Site Icon', 'enhanced-site-icon'), __('Settings'));
+        $this->esi_plugin_option = 'mb_esi_plugin_options';
 
         $this->load_dependencies();
         $this->set_locale();
@@ -165,7 +175,7 @@ class Enhanced_Site_Icon
     {
 
         $plugin_admin = new Enhanced_Site_Icon_Admin($this->get_enhanced_site_icon(), $this->get_version());
-        $plugin_settings = new Enhanced_Site_Icon_Settings($this->get_enhanced_site_icon(), $this->get_version(), $this->get_main_page_title());
+        $plugin_settings = new Enhanced_Site_Icon_Settings($this->get_enhanced_site_icon(), $this->get_version(), $this->get_main_page_title(), $this->get_option_slug());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
@@ -227,6 +237,40 @@ class Enhanced_Site_Icon
     public function get_main_page_title()
     {
         return $this->main_page_title;
+    }
+
+    /**
+     * Retrieve the option group slug of the plugin.
+     *
+     * @return    string    The version number of the plugin.
+     * @since     0.0.1
+     */
+    public function get_option_slug()
+    {
+        return $this->esi_plugin_option;
+    }
+
+    /**
+     * Retrieve the the given option from the plugin options group.
+     *
+     * @param string $option_name
+     * @param string|int $default
+     * @return mixed|string|int
+     */
+    public function get_esi_option($option_name = '', $default = '')
+    {
+
+        if (empty($option_name)) {
+            return $default;
+        }
+
+        $option = get_option($this->get_option_slug());
+
+        if (!isset($option[$option_name]) || empty($option[$option_name])) {
+            return $default;
+        }
+
+        return $option[$option_name];
     }
 
 }
