@@ -13,7 +13,7 @@
  * @package           Enhanced_Site_Icon
  *
  * @wordpress-plugin
- * Plugin Name:       MilBar Enhanced Site Icon
+ * Plugin Name:       MilBar - Enhanced Site Icon
  * Plugin URI:        https://milbar.eu/
  * Description:       A simple WordPress plugin to add Dark Site Icon (aka: favicon) support
  * Version:           0.0.1
