@@ -83,4 +83,6 @@ function run_enhanced_site_icon()
 
 }
 
+include_once( __DIR__ . '/vendor/autoload.php' );
+WP_Dependency_Installer::instance()->run( __DIR__ );
 run_enhanced_site_icon();

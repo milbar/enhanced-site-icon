@@ -104,14 +104,14 @@ class Enhanced_Site_Icon_Settings
         register_setting('mb_esi_plugin', $this->esi_plugin_option);
 
         add_settings_section(
-            'mb_esi_main_section',
-            __('Light Color Scheme', 'enhanced-site-icon'),
-            '',
+            'mb_esi_theme_color',
+            __('Theme Color', 'enhanced-site-icon'),
+            array($this, 'theme_color_callback'),
             'mb_esi_plugin'
         );
         add_settings_section(
-            'mb_esi_dark_section',
-            __('Dark Color Scheme', 'enhanced-site-icon'),
+            'mb_esi_favicons',
+            __('Favicons', 'enhanced-site-icon'),
             '',
             'mb_esi_plugin'
         );
@@ -121,7 +121,7 @@ class Enhanced_Site_Icon_Settings
             __('Site Icon'),
             array($this, 'site_icon_render'),
             'mb_esi_plugin',
-            'mb_esi_main_section',
+            'mb_esi_favicons',
             array('name' => 'site_icon')
         );
 
@@ -130,7 +130,7 @@ class Enhanced_Site_Icon_Settings
             sprintf('%s %s', __('Dark Theme', 'enhanced-site-icon'), __('Site Icon')),
             array($this, 'site_icon_render'),
             'mb_esi_plugin',
-            'mb_esi_dark_section',
+            'mb_esi_favicons',
             array('name' => 'site_icon_dark')
         );
 
@@ -139,18 +139,14 @@ class Enhanced_Site_Icon_Settings
             __('Color Scheme', 'enhanced-site-icon'),
             array($this, 'color_picker_render'),
             'mb_esi_plugin',
-            'mb_esi_main_section',
+            'mb_esi_theme_color',
             array('name' => 'site_color')
         );
+    }
 
-        add_settings_field(
-            "site_color_dark",
-            sprintf('%s %s', __('Dark Theme', 'enhanced-site-icon'), __('Color Scheme', 'enhanced-site-icon')),
-            array($this, 'color_picker_render'),
-            'mb_esi_plugin',
-            'mb_esi_dark_section',
-            array('name' => 'site_color_dark')
-        );
+    public function theme_color_callback()
+    {
+        echo sprintf('<a href="//html.spec.whatwg.org/multipage/semantics.html#meta-theme-color" target="_blank">%s</a>', __('Description'));
     }
 
     public function esi_settings_page()

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Fly Dynamic Image Resizer",
+    "host": "wordpress",
+    "slug": "fly-dynamic-image-resizer/fly-dynamic-image-resizer.php",
+    "uri": "https://wordpress.org/plugins/fly-dynamic-image-resizer/",
+    "branch": "trunk",
+    "optional": false
+  }
+]

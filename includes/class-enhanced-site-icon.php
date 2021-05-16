@@ -208,7 +208,7 @@ class Enhanced_Site_Icon
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
         $this->loader->add_action('wp_head', $plugin_public, 'esi_print_scripts');
-
+        $this->loader->add_action('site_icon_meta_tags', $plugin_public, 'extend_meta_tags');
     }
 
     /**
