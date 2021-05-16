@@ -28,9 +28,9 @@ class Enhanced_Site_Icon_Admin
      *
      * @since    0.0.1
      * @access   private
-     * @var      string $enhanced_site_icon The ID of this plugin.
+     * @var      string $plugin_name The ID of this plugin.
      */
-    private $enhanced_site_icon;
+    private $plugin_name;
 
     /**
      * The version of this plugin.
@@ -42,17 +42,27 @@ class Enhanced_Site_Icon_Admin
     private $version;
 
     /**
+     * Options Group slug of the plugin.
+     *
+     * @since    0.0.1
+     * @access   protected
+     * @var      string $esi_plugin_option Options Group slug of the plugin.
+     */
+    private $esi_plugin_option;
+
+    /**
      * Initialize the class and set its properties.
      *
-     * @param string $enhanced_site_icon The name of this plugin.
+     * @param string $plugin_name The name of this plugin.
      * @param string $version The version of this plugin.
      * @since    0.0.1
      */
-    public function __construct($enhanced_site_icon, $version)
+    public function __construct($plugin_name, $version, $esi_plugin_option)
     {
 
-        $this->enhanced_site_icon = $enhanced_site_icon;
+        $this->plugin_name = $plugin_name;
         $this->version = $version;
+        $this->esi_plugin_option = $esi_plugin_option;
 
     }
 
@@ -76,8 +86,8 @@ class Enhanced_Site_Icon_Admin
          * class.
          */
 
-        wp_enqueue_style( 'wp-color-picker' );
-        wp_enqueue_style($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'css/enhanced-site-icon.css', array(), $this->version, 'all');
+        wp_enqueue_style('wp-color-picker');
+        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/enhanced-site-icon.css', array(), $this->version, 'all');
     }
 
     /**
@@ -100,7 +110,29 @@ class Enhanced_Site_Icon_Admin
          * class.
          */
 
-        wp_enqueue_script($this->enhanced_site_icon, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'wp-color-picker'), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'wp-color-picker'), $this->version, false);
 
+    }
+
+    /**
+     * Update WordPress site_icon option with plugin default
+     */
+    public function esi_options_save($old_value, $new_value)
+    {
+        if (isset($new_value['site_icon'])) {
+            update_option('site_icon', $new_value['site_icon']);
+        }
+    }
+
+    /**
+     * Update Plugin site_icon when customizer save
+     */
+    public function esi_update_site_icon()
+    {
+        $site_icon = get_option('site_icon');
+        $plugin_options = get_option($this->esi_plugin_option);
+        $plugin_options['site_icon'] = $site_icon;
+
+        update_option($this->esi_plugin_option, $plugin_options);
     }
 }

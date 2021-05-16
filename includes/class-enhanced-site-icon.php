@@ -45,9 +45,9 @@ class Enhanced_Site_Icon
      *
      * @since    0.0.1
      * @access   protected
-     * @var      string $enhanced_site_icon The string used to uniquely identify this plugin.
+     * @var      string $plugin_name The string used to uniquely identify this plugin.
      */
-    protected $enhanced_site_icon;
+    protected $plugin_name;
 
     /**
      * The current version of the plugin.
@@ -92,13 +92,14 @@ class Enhanced_Site_Icon
         } else {
             $this->version = '0.0.1';
         }
-        $this->enhanced_site_icon = 'enhanced-site-icon';
+        $this->plugin_name = 'enhanced-site-icon';
         $this->main_page_title = sprintf('%s - %s', __('Enhanced Site Icon', 'enhanced-site-icon'), __('Settings'));
         $this->esi_plugin_option = 'mb_esi_plugin_options';
 
         $this->load_dependencies();
         $this->set_locale();
         $this->define_admin_hooks();
+        $this->define_public_hooks();
     }
 
     /**
@@ -142,6 +143,12 @@ class Enhanced_Site_Icon
          */
         require_once plugin_dir_path(dirname(__FILE__)) . 'admin/includes/class-enhanced-site-icon-settings.php';
 
+        /**
+         * The class responsible for defining all actions that occur in the public-facing
+         * side of the site.
+         */
+        require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-enhanced-site-icon-public.php';
+
         $this->loader = new Enhanced_Site_Icon_Loader();
 
     }
@@ -174,13 +181,33 @@ class Enhanced_Site_Icon
     private function define_admin_hooks()
     {
 
-        $plugin_admin = new Enhanced_Site_Icon_Admin($this->get_enhanced_site_icon(), $this->get_version());
-        $plugin_settings = new Enhanced_Site_Icon_Settings($this->get_enhanced_site_icon(), $this->get_version(), $this->get_main_page_title(), $this->get_option_slug());
+        $plugin_admin = new Enhanced_Site_Icon_Admin($this->get_plugin_name(), $this->get_version(), $this->get_option_slug());
+        $plugin_settings = new Enhanced_Site_Icon_Settings($this->get_plugin_name(), $this->get_version(), $this->get_main_page_title(), $this->get_option_slug());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action('update_option_' . $this->esi_plugin_option . '', $plugin_admin, 'esi_options_save', 10, 2);
+        $this->loader->add_action('customize_save_after', $plugin_admin, 'esi_update_site_icon');
         $this->loader->add_action('admin_menu', $plugin_settings, 'add_theme_page');
         $this->loader->add_action('admin_init', $plugin_settings, 'mb_esi_settings_init');
+
+    }
+
+    /**
+     * Register all of the hooks related to the public-facing functionality
+     * of the plugin.
+     *
+     * @since    0.0.1
+     * @access   private
+     */
+    private function define_public_hooks()
+    {
+
+        $plugin_public = new Enhanced_Site_Icon_Public($this->get_plugin_name(), $this->get_version());
+
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        $this->loader->add_action('wp_head', $plugin_public, 'esi_print_scripts');
 
     }
 
@@ -201,9 +228,9 @@ class Enhanced_Site_Icon
      * @return    string    The name of the plugin.
      * @since     0.0.1
      */
-    public function get_enhanced_site_icon()
+    public function get_plugin_name()
     {
-        return $this->enhanced_site_icon;
+        return $this->plugin_name;
     }
 
     /**

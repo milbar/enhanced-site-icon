@@ -27,9 +27,9 @@ class Enhanced_Site_Icon_Settings
      *
      * @since    0.0.1
      * @access   private
-     * @var      string $enhanced_site_icon The ID of this plugin.
+     * @var      string $plugin_name The ID of this plugin.
      */
-    private $enhanced_site_icon;
+    private $plugin_name;
 
     /**
      * The version of this plugin.
@@ -61,15 +61,15 @@ class Enhanced_Site_Icon_Settings
     /**
      * Initialize the class and set its properties.
      *
-     * @param string $enhanced_site_icon The name of this plugin.
+     * @param string $plugin_name The name of this plugin.
      * @param string $version The version of this plugin.
      * @param string $main_page_title The main page title of the plugin.
      * @since    0.0.1
      */
-    public function __construct($enhanced_site_icon, $version, $main_page_title, $esi_plugin_option)
+    public function __construct($plugin_name, $version, $main_page_title, $esi_plugin_option)
     {
 
-        $this->enhanced_site_icon = $enhanced_site_icon;
+        $this->plugin_name = $plugin_name;
         $this->version = $version;
         $this->main_page_title = $main_page_title;
         $this->esi_plugin_option = $esi_plugin_option;
@@ -209,6 +209,79 @@ class Enhanced_Site_Icon_Settings
         <input class="esi-color-picker" type='text' name='<?php echo $name_arg ?>'
                value='<?php echo $value; ?>'>
         <?php
+    }
+
+    /**
+     * Add custom meta tags to head
+     */
+    function yco_site_icon_meta_tags($meta_tags)
+    {
+        $site_icon = get_option('site_icon');
+
+        if ($site_icon and function_exists('fly_get_attachment_image_src')) {
+            $site_icon_mime_type = get_post_mime_type($site_icon);
+
+            // APPLE ICONS
+            $icon_sizes_apple = [
+                [57, 57],
+                [60, 60],
+                [72, 72],
+                [76, 76],
+                [114, 114],
+                [120, 120],
+                [144, 144],
+                [152, 152],
+            ];
+            $apple_format = '<link rel="apple-touch-icon" href="%s" sizes="%s" />';
+
+            foreach ($icon_sizes_apple as $icon_size) {
+                $meta_tags[] = sprintf($apple_format,
+                    esc_url(fly_get_attachment_image_src($site_icon, $icon_size, true)['src']),
+                    $icon_size[0] . 'x' . $icon_size[1]
+                );
+            }
+
+            // ICONS
+            $icon_sizes = [
+                [16, 16],
+                [32, 32],
+                [96, 96],
+                [128, 128],
+                [196, 196],
+            ];
+            $icons_format = '<link rel="icon" type="%s" href="%s" sizes="%s" />';
+
+            foreach ($icon_sizes as $icon_size) {
+                $meta_tags[] = sprintf($icons_format,
+                    $site_icon_mime_type,
+                    esc_url(fly_get_attachment_image_src($site_icon, $icon_size, true)['src']),
+                    $icon_size[0] . 'x' . $icon_size[1]
+                );
+            }
+
+            // MS APPLICATION META
+            $ms_icons = [
+                [144, 144, 'TileImage'],
+                [70, 70, 'square70x70logo'],
+                [150, 150, 'square150x150logo'],
+                [310, 310, 'square310x310logo'],
+                [310, 150, 'wide310x150logo']
+            ];
+            $ms_format = '<meta name="%s" content="%s" />';
+
+            $meta_tags[] = sprintf('<meta name="application-name" content="%s" />', get_bloginfo());
+            $meta_tags[] = sprintf('<meta name="msapplication-TileColor" content="%s" />', '#FFFFFF');
+            foreach ($ms_icons as $ms_icon) {
+                $meta_tags[] = sprintf($ms_format,
+                    'msapplication-' . $ms_icon[2],
+                    esc_url(fly_get_attachment_image_src($site_icon, [
+                        $ms_icon[0],
+                        $ms_icon[1]
+                    ], true)['src']));
+            }
+        }
+
+        return $meta_tags;
     }
 
 }
