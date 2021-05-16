@@ -1,4 +1,8 @@
 {
+    "name": "milbar/enhanced-site-icon",
+    "description": "A simple WordPress plugin to add Dark Site Icon (aka: favicon) support",
+    "type": "wordpress-plugin",
+
     "require": {
         "afragen/wp-dependency-installer": "^3.1"
     }
