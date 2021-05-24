@@ -1,23 +1,23 @@
-#, fuzzy
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: MilBar - Enhanced Site Icon\n"
-"POT-Creation-Date: 2021-05-24 17:55+0200\n"
-"PO-Revision-Date: 2021-05-24 17:54+0200\n"
+"POT-Creation-Date: 2021-05-24 17:50+0200\n"
+"PO-Revision-Date: 2021-05-24 17:53+0200\n"
 "Last-Translator: Bartalovics Milán <b.milan@milbar.eu>\n"
 "Language-Team: Bartalovics Milán <b.milan@milbar.eu>\n"
+"Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.4.3\n"
 "X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: enhanced-site-icon.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
@@ -26,56 +26,58 @@ msgstr ""
 #: admin/includes/class-enhanced-site-icon-settings.php:121
 #: admin/includes/class-enhanced-site-icon-settings.php:130
 msgid "Site Icon"
-msgstr ""
+msgstr "Oldal ikonja"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:108
 msgid "Theme Color"
-msgstr ""
+msgstr "Téma színe"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:114
 msgid "Favicons"
-msgstr ""
+msgstr "Honlap ikonok"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:130
 msgid "Dark Theme"
-msgstr ""
+msgstr "Sötét mód"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:139
 msgid "Color Scheme"
-msgstr ""
+msgstr "Oldal elsődleges színe"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:149
 msgid "Description"
-msgstr ""
+msgstr "Leírás"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:192
 msgid "Upload"
-msgstr ""
+msgstr "Feltöltés"
 
 #: admin/includes/class-enhanced-site-icon-settings.php:195
 msgid "Delete"
-msgstr ""
+msgstr "Törlés"
 
 #: includes/class-enhanced-site-icon.php:96
 msgid "Enhanced Site Icon"
-msgstr ""
+msgstr "Továbbfejlesztett honlap ikon"
 
 #: includes/class-enhanced-site-icon.php:96
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #. Plugin Name of the plugin/theme
 msgid "MilBar - Enhanced Site Icon"
-msgstr ""
+msgstr "MilBar - Továbbfejlesztett honlap ikon"
 
 #. Plugin URI of the plugin/theme
 msgid "https://milbar.eu/"
-msgstr ""
+msgstr "https://milbar.eu/"
 
 #. Description of the plugin/theme
 msgid "A simple WordPress plugin to add Dark Site Icon (aka: favicon) support"
 msgstr ""
+"Egy egyszerű WordPress plugin a honlap ikon (más néven: favicon) sötét mód "
+"támogatására"
 
 #. Author of the plugin/theme
 msgid "Milan Bartalovics"
-msgstr ""
+msgstr "Bartalovics Milán"

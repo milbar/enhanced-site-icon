@@ -1,4 +1,4 @@
-#MilBar - Enhanced Site Icon
+# MilBar - Enhanced Site Icon
 
 ## Description
 
