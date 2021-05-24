@@ -13,18 +13,6 @@
             set_to_post_id = $('#' + clickedBtnID).closest('td').find('input.upload_field:first').val();
             event.preventDefault();
 
-            // If the media frame already exists, reopen it.
-            if (file_frame) {
-                // Set the post ID to what we want
-                file_frame.uploader.uploader.param('post_id', set_to_post_id);
-                // Open frame
-                file_frame.open();
-                return;
-            } else {
-                // Set the wp.media post id so the uploader grabs the ID we want when initialised
-                wp.media.model.settings.post.id = set_to_post_id;
-            }
-
             // Create the media frame.
             file_frame = wp.media.frames.file_frame = wp.media({
                 title: 'Select a image to upload',
@@ -32,7 +20,7 @@
                     text: 'Use this image',
                 },
                 multiple: false, // Set to true to allow multiple files to be selected
-                library: { // Todo: Use the filter option somehow
+                library: {
                     query: true,
                     post_mime_type: ['image/png'] // pass all mimes in array
                 },
