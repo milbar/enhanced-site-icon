@@ -57,30 +57,6 @@ class Enhanced_Site_Icon_Public
     }
 
     /**
-     * Register the stylesheets for the public-facing side of the site.
-     *
-     * @since    0.0.1
-     */
-    public function enqueue_styles()
-    {
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in Enhanced_Site_Icon_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The Enhanced_Site_Icon_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
-
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/enhanced-site-icon.css', array(), $this->version, 'all');
-
-    }
-
-    /**
      * Register the JavaScript for the public-facing side of the site.
      *
      * @since    0.0.1
@@ -100,19 +76,8 @@ class Enhanced_Site_Icon_Public
          * class.
          */
 
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery'), $this->version, false);
-    }
-
-    public function esi_print_scripts()
-    {
-        ?>
-        <script src="//unpkg.com/favicon-switcher@1.2.2/dist/index.umd.js" crossorigin="anonymous" type="application/javascript"></script>
-        <script>
-            jQuery(document).ready(function ($) {
-                faviconSwitcher()
-            });
-        </script>
-        <?php
+        wp_enqueue_script('favicon-switcher', plugin_dir_url(__FILE__) . 'src/favicon-switcher.js', array('jquery'), '1.2.2', false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'favicon-switcher'), $this->version, false);
     }
 
     /**
