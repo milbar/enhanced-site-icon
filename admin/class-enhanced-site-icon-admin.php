@@ -111,9 +111,7 @@ class Enhanced_Site_Icon_Admin
          */
 
         wp_enqueue_script('favicon-switcher', plugin_dir_url(__FILE__) . 'src/favicon-switcher.js', array('jquery'), '1.2.2', false);
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'favicon-switcher'), $this->version, false);
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'wp-color-picker'), $this->version, false);
-
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/enhanced-site-icon.js', array('jquery', 'wp-color-picker', 'favicon-switcher'), $this->version, false);
     }
 
     /**
