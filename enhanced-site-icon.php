@@ -16,7 +16,7 @@
  * Plugin Name:       MilBar - Enhanced Site Icon
  * Plugin URI:        https://milbar.eu/
  * Description:       A simple WordPress plugin to add Dark Site Icon (aka: favicon) support
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Milan Bartalovics
  * Plugin URI:        https://milbar.eu/
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if (!defined('WPINC')) {
  * Start at version 0.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PLUGIN_NAME_VERSION', '1.0.0');
+define('PLUGIN_NAME_VERSION', '1.0.1');
 
 /**
  * The code that runs during plugin activation.

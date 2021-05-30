@@ -186,7 +186,7 @@ class Enhanced_Site_Icon
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-        $this->loader->add_action('update_option_' . $this->esi_plugin_option . '', $plugin_admin, 'esi_options_save', 10, 2);
+        $this->loader->add_action('update_option_' . $this->esi_plugin_option, $plugin_admin, 'esi_options_save', 10, 2);
         $this->loader->add_action('customize_save_after', $plugin_admin, 'esi_update_site_icon');
         $this->loader->add_action('admin_menu', $plugin_settings, 'add_theme_page');
         $this->loader->add_action('admin_init', $plugin_settings, 'mb_esi_settings_init');

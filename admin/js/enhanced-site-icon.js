@@ -1,6 +1,8 @@
 (function ($) {
     'use strict';
-
+    jQuery(document).ready(function ($) {
+        faviconSwitcher()
+    });
     jQuery(document).ready(function ($) {
 
         // Uploading files
