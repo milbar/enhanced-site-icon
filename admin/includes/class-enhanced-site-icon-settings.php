@@ -182,9 +182,15 @@ class Enhanced_Site_Icon_Settings
             $show_delete = true;
         }
 
+        if (intval($site_icon) > 0) {
+            $src = wp_get_attachment_thumb_url($site_icon);
+        } else {
+            $src = $site_icon;
+        }
+
         ?>
         <img class="upload_preview" <?php echo empty($site_icon) ? 'style="display:none;"' : ''; ?>
-             src="<?php echo wp_get_attachment_thumb_url($site_icon); ?>"/>
+             src="<?php echo $src; ?>"/>
         <input type="hidden" class="upload_field" name="<?php echo $name_arg ?>"
                id="<?php echo $name ?>"
                value="<?php echo $site_icon; ?>"/>
@@ -205,6 +211,41 @@ class Enhanced_Site_Icon_Settings
         <input class="esi-color-picker" type='text' name='<?php echo $name_arg ?>'
                value='<?php echo $value; ?>'>
         <?php
+    }
+
+    /**
+     * Add customizer settings
+     */
+    public function customize_register($wp_customize)
+    {
+        // Add Settings
+        $wp_customize->add_setting($this->esi_plugin_option . '[site_color]', array(
+            'type' => 'option',
+            'capability' => 'manage_options',
+            'transport' => 'postMessage',
+        ));
+
+        $wp_customize->add_setting($this->esi_plugin_option . '[site_icon_dark]', array(
+            'type' => 'option',
+            'capability' => 'manage_options',
+            'transport' => 'postMessage',
+            'height' => 325,
+        ));
+
+        // Add Controls
+        $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'site_color_control', array(
+            'label' => __('Color Scheme', 'enhanced-site-icon'),
+            'section' => 'title_tagline',
+            'settings' => $this->esi_plugin_option . '[site_color]',
+            'priority' => 99,
+        )));
+
+        $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'site_icon_dark_control', array(
+            'label' => sprintf('%s %s', __('Dark Theme', 'enhanced-site-icon'), __('Site Icon')),
+            'section' => 'title_tagline',
+            'settings' => $this->esi_plugin_option . '[site_icon_dark]',
+            'priority' => 101,
+        )));
     }
 
 }

@@ -190,7 +190,7 @@ class Enhanced_Site_Icon
         $this->loader->add_action('customize_save_after', $plugin_admin, 'esi_update_site_icon');
         $this->loader->add_action('admin_menu', $plugin_settings, 'add_theme_page');
         $this->loader->add_action('admin_init', $plugin_settings, 'mb_esi_settings_init');
-
+        $this->loader->add_action('customize_register', $plugin_settings, 'customize_register');
     }
 
     /**
